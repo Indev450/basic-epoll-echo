@@ -99,7 +99,7 @@ static void add_epoll_socket(int efd, int sfd, int events)
 static response_type_t respond(int fd, char *buf, size_t bufsize)
 {
     struct sockaddr_in addr = {0};
-    socklen_t addrlen = 0;
+    socklen_t addrlen = sizeof(addr);
 
     ssize_t length = recvfrom(fd, buf, bufsize, 0, (struct sockaddr*)&addr, &addrlen);
 
@@ -195,7 +195,7 @@ int main()
     }
 
     int tcp_sock = open_tcp_socket(43210);
-    int udp_sock = open_udp_socket(43211);
+    int udp_sock = open_udp_socket(43210);
 
     add_epoll_socket(efd, tcp_sock, EPOLLIN);
     add_epoll_socket(efd, udp_sock, EPOLLIN);
